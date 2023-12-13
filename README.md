@@ -1,5 +1,5 @@
 # video-compression-python
- A simple video compression tool for MP4 video formats
+ A simple video compression tool for MP4 and .Mov video formats
 
 # installation
 ```
