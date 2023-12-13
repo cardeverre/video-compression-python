@@ -8,5 +8,5 @@ pip install moviepy
  
 ## usage
 ```
-python compress_video.py <path_to_video> <compression_percentage>
+python main.py <path_to_video> <compression_percentage>
 ```
