@@ -4,7 +4,7 @@ import os
 
 def compress_video(input_video_path, compression_percent, output_video_path=None):
     """
-    Compresses a video file (MOV or MP4) to a specified compression percentage while retaining audio.
+    Compresses a video file (MOV, MP4, or ProRes 4444) to a specified compression percentage while retaining audio.
     Uses the moviepy library.
 
     :param input_video_path: Path to the input video file.
@@ -17,9 +17,9 @@ def compress_video(input_video_path, compression_percent, output_video_path=None
     if not 0 <= compression_percent <= 100:
         raise ValueError("Compression percentage must be between 0 and 100.")
 
-    # Check if input file is either MOV or MP4
+    # Check if input file is either MOV, MP4, or ProRes 4444
     if not input_video_path.lower().endswith(('.mov', '.mp4')):
-        raise ValueError("Input file must be a .mov or .mp4 file.")
+        raise ValueError("Input file must be a .mov, .mp4, or ProRes 4444 file.")
 
     # Derive output video path if not provided
     if output_video_path is None:
@@ -33,10 +33,11 @@ def compress_video(input_video_path, compression_percent, output_video_path=None
     new_resolution = (int(clip.size[0] * compression_percent / 100), 
                       int(clip.size[1] * compression_percent / 100))
 
-    # Resize the clip and write to a file
+    # Resize the clip and write to a file with specific codec parameters
     clip_resized = clip.resize(new_resolution)
-    clip_resized.write_videofile(output_video_path, codec="libx264", audio_codec="aac")
-
+    clip_resized.write_videofile(output_video_path, codec="libx264", audio_codec="aac", 
+                             bitrate="1000k", preset="slow", ffmpeg_params=["-color_primaries", "bt709"])
+ 
     print(f"Video compressed and saved as {output_video_path}")
 
 if __name__ == "__main__":
