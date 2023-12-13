@@ -4,10 +4,10 @@ import os
 
 def compress_video(input_video_path, compression_percent, output_video_path=None):
     """
-    Compresses an MP4 video file to a specified compression percentage while retaining audio.
+    Compresses a video file (MOV or MP4) to a specified compression percentage while retaining audio.
     Uses the moviepy library.
 
-    :param input_video_path: Path to the input MP4 video file.
+    :param input_video_path: Path to the input video file.
     :param compression_percent: The percentage to compress the video (0-100).
     :param output_video_path: Path for the output compressed video file. If None, appends '_compressed' to the input file name.
     :return: None
@@ -16,6 +16,10 @@ def compress_video(input_video_path, compression_percent, output_video_path=None
     # Ensure the compression percentage is valid
     if not 0 <= compression_percent <= 100:
         raise ValueError("Compression percentage must be between 0 and 100.")
+
+    # Check if input file is either MOV or MP4
+    if not input_video_path.lower().endswith(('.mov', '.mp4')):
+        raise ValueError("Input file must be a .mov or .mp4 file.")
 
     # Derive output video path if not provided
     if output_video_path is None:
